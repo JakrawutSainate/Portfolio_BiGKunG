@@ -1,101 +1,151 @@
-import Image from "next/image";
+"use client";
+
+import Navbar from "@/app/component/navbar";
+import InkBrushCursor from "@/app/component/InkBrushCursor";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  useEffect(() => {
+    const sakuraImages = [
+      "/assets/Vector-1.png",
+      "/assets/Vector-2.png",
+      "/assets/Vector-3.png",
+      "/assets/Vector-4.png",
+      "/assets/Vector-5.png",
+      "/assets/Vector-6.png",
+      "/assets/Vector-7.png",
+      "/assets/Vector-8.png",
+      "/assets/Vector-9.png",
+      "/assets/Vector-10.png",
+      "/assets/Vector-11.png",
+      "/assets/Vector-12.png",
+      "/assets/Vector-13.png",
+      "/assets/Vector-14.png",
+      "/assets/Vector-15.png",
+      "/assets/Vector-16.png",
+      "/assets/Vector-17.png",
+      "/assets/Vector-18.png",
+      "/assets/Vector-19.png",
+      "/assets/Vector-20.png",
+      "/assets/Vector-21.png",
+      "/assets/Vector-22.png",
+      "/assets/Vector-23.png",
+      "/assets/Vector-24.png",
+      "/assets/Vector-25.png",
+      "/assets/Vector-26.png",
+      "/assets/Vector-27.png",
+      "/assets/Vector.png",
+    ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    const createSakura = () => {
+      const sakura = document.createElement("div");
+      sakura.className = "absolute w-2 h-2 sakura";
+      sakura.style.backgroundImage = `url('${
+        sakuraImages[Math.floor(Math.random() * sakuraImages.length)]
+      }')`;
+      sakura.style.backgroundSize = "contain";
+      sakura.style.backgroundRepeat = "no-repeat";
+      sakura.style.left = Math.random() * (window.innerWidth - 32) + "px";
+      sakura.style.top = "-50px";
+      sakura.style.zIndex = "1000";
+      document.body.appendChild(sakura);
+
+      let positionY = -50;
+      let positionX = parseFloat(sakura.style.left);
+      const speedX = (Math.random() - 0.5) * 2;
+      const fallInterval = setInterval(() => {
+        positionY += 1; // ลดความเร็วการลอยลง
+        positionX += speedX;
+
+        if (positionX < 0 || positionX > window.innerWidth - 32) {
+          positionX = Math.max(0, Math.min(positionX, window.innerWidth - 32));
+        }
+
+        sakura.style.top = positionY + "px";
+        sakura.style.left = positionX + "px";
+
+        if (positionY > window.innerHeight - 50) {
+          clearInterval(fallInterval);
+          sakura.remove();
+        }
+      }, 30); // เพิ่มระยะเวลาใน setInterval
+    };
+
+    const interval = setInterval(createSakura, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const typeWriter = (
+      element: HTMLElement,
+      text: string,
+      speed: number,
+      callback?: () => void
+    ) => {
+      let index = 0;
+      element.innerHTML = ""; // ล้างเนื้อหาของ element ก่อนเริ่มพิมพ์
+      const interval = setInterval(() => {
+        if (index < text.length) {
+          element.innerHTML += text.charAt(index);
+          index++;
+        } else {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, speed);
+    };
+
+    const startTyping = () => {
+      const section = document.getElementById("home");
+      if (section && !section.dataset.initialized) {
+        section.dataset.initialized = "true"; // ป้องกันการเรียกซ้ำ
+        section.innerHTML = ""; // ล้างเนื้อหาเดิม
+
+        const h1 = document.createElement("h1");
+        h1.textContent = "Welcome to My Portfolio";
+        section.appendChild(h1);
+        console.log("Added h1");
+
+        const p1 = document.createElement("p");
+        section.appendChild(p1);
+        console.log("Added p1");
+        typeWriter(p1, "I am Jakrawut Sainate", 100, () => {
+          const p2 = document.createElement("p");
+          p2.id = "p2"; // กำหนด id ให้ p2
+          section.appendChild(p2);
+          console.log("Added p2");
+          typeWriter(p2, "Programmer & Web Developer", 100, () => {
+            setTimeout(() => {
+              section.dataset.initialized = ""; // รีเซ็ต dataset.initialized
+              startTyping(); // เริ่มพิมพ์ใหม่
+            }, 6000);
+          });
+        });
+      }
+    };
+
+    startTyping();
+  }, []); // ตรวจสอบว่า dependencies เป็น [] เพื่อให้เรียกใช้เพียงครั้งเดียว
+
+  return (
+    <div
+      className="h-screen w-full bg-center bg-cover 2xl:bg-contain bg-[#EEDAAE] overflow-hidden background"
+      style={{ backgroundImage: "url('/assets/bk.png')" }}
+    >
+      <InkBrushCursor />
+      <Navbar>
+        <div className="p-4 text-center">
+          <section
+            id="home"
+            className="mt-32 ml-[30%] md:ml-0 space-y-4 text-base md:text-3xl "
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <h1>Welcome to My Portfolio</h1>
+            <p>I am Jakrawut Sainate</p>
+            <p>Programmer & Web Developer</p>
+          </section>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </Navbar>
     </div>
   );
 }

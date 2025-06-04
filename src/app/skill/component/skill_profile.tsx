@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // ✅ 1. Type Definitions
@@ -84,7 +84,7 @@ export default function SkillProfile() {
     if (scrollRef.current) {
       const container = scrollRef.current;
       const cardWidth = container.firstElementChild?.clientWidth || 0;
-      return cardWidth + 16; // include gap (gap-4 = 1rem = 16px)
+      return cardWidth + 16; // include gap
     }
     return 0;
   };
@@ -120,7 +120,6 @@ export default function SkillProfile() {
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
-      {/* Desktop Grid */}
       <div className="hidden lg:grid gap-6 lg:grid-cols-3">
         {skills.map((skill) => (
           <div
@@ -135,7 +134,6 @@ export default function SkillProfile() {
         ))}
       </div>
 
-      {/* Mobile Scrollable */}
       <div className="lg:hidden relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
@@ -158,7 +156,6 @@ export default function SkillProfile() {
           ))}
         </div>
 
-        {/* Arrows */}
         <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 z-20">
           <button
             onClick={handlePrev}

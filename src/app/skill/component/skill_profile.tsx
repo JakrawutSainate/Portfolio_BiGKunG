@@ -110,36 +110,22 @@ export default function SkillProfile() {
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
-      {/* lg:grid layout */}
-      <div className="hidden lg:grid gap-6 lg:grid-cols-3">
-        {skills.map((skill) => (
-          <div
-            key={skill.title}
-            className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20"
-          >
-            <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
-              {skill.title}
-            </h2>
-            {renderSkillContent(skill)}
-          </div>
-        ))}
-      </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Main Active Skill */}
+        <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
+          <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+            {skills[currentSkill].title}
+          </h2>
+          {renderSkillContent(skills[currentSkill])}
+        </div>
 
-      {/* Mobile: Horizontal scrollable flex */}
-      <div className="lg:hidden relative overflow-hidden">
-        {/* fade left */}
-        <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
-        {/* fade right */}
-        <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
-
-        <div
-          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory px-2"
-          style={{ scrollBehavior: "smooth" }}
-        >
-          {skills.map((skill) => (
+        {/* BACKEND Static */}
+        {skills
+          .filter((s) => s.title === "BACKEND")
+          .map((skill) => (
             <div
               key={skill.title}
-              className="min-w-[80%] snap-center shrink-0 p-6 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20 transition-all duration-300 ease-in-out"
+              className="hidden lg:block p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20"
             >
               <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
                 {skill.title}
@@ -147,23 +133,37 @@ export default function SkillProfile() {
               {renderSkillContent(skill)}
             </div>
           ))}
-        </div>
 
-        {/* Mobile Arrows */}
-        <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 z-20">
-          <button
-            onClick={handlePrev}
-            className="bg-black bg-opacity-40 backdrop-blur-sm p-2 rounded-full text-[#EEDAAE] hover:text-white transition"
-          >
-            <FaChevronLeft size={20} />
-          </button>
-          <button
-            onClick={handleNext}
-            className="bg-black bg-opacity-40 backdrop-blur-sm p-2 rounded-full text-[#EEDAAE] hover:text-white transition"
-          >
-            <FaChevronRight size={20} />
-          </button>
-        </div>
+        {/* DEVOPS Static */}
+        {skills
+          .filter((s) => s.title === "DEVOPS")
+          .map((skill) => (
+            <div
+              key={skill.title}
+              className="hidden lg:block p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20"
+            >
+              <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+                {skill.title}
+              </h2>
+              {renderSkillContent(skill)}
+            </div>
+          ))}
+      </div>
+
+      {/* Mobile Arrows */}
+      <div className="lg:hidden flex justify-between mt-6 px-6">
+        <button
+          onClick={handlePrev}
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+          onClick={handleNext}
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+        >
+          <FaChevronRight />
+        </button>
       </div>
     </div>
   );

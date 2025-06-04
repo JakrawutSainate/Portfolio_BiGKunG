@@ -111,12 +111,31 @@ export default function SkillProfile() {
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">
-        {/* Active Skill */}
-        <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
-          <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
-            {skills[currentSkill].title}
-          </h2>
-          {renderSkillContent(skills[currentSkill])}
+        {/* Active Skill with arrows around */}
+        <div className="relative w-full">
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-2"
+          >
+            <FaChevronLeft />
+          </button>
+
+          {/* Skill Box */}
+          <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
+            <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+              {skills[currentSkill].title}
+            </h2>
+            {renderSkillContent(skills[currentSkill])}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-2"
+          >
+            <FaChevronRight />
+          </button>
         </div>
 
         {/* BACKEND Static */}
@@ -148,22 +167,6 @@ export default function SkillProfile() {
               {renderSkillContent(skill)}
             </div>
           ))}
-      </div>
-
-      {/* Mobile Arrows */}
-      <div className="lg:hidden flex justify-between mt-6 px-6 relative z-50">
-        <button
-          onClick={handlePrev}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition"
-        >
-          <FaChevronLeft />
-        </button>
-        <button
-          onClick={handleNext}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition"
-        >
-          <FaChevronRight />
-        </button>
       </div>
     </div>
   );

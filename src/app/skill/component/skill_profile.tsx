@@ -116,7 +116,7 @@ export default function SkillProfile() {
           {/* ปุ่มซ้าย  */}
           <button
             onClick={handlePrev}
-            className="lg:hidden absolute -left-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-5"
+            className="lg:hidden absolute -left-10 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50"
           >
             <FaChevronLeft />
           </button>
@@ -132,7 +132,7 @@ export default function SkillProfile() {
           {/* ปุ่มขวา */}
           <button
             onClick={handleNext}
-            className="lg:hidden absolute -right-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-5"
+            className="lg:hidden absolute -right-10 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50"
           >
             <FaChevronRight />
           </button>

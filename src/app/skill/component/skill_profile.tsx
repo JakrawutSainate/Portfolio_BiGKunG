@@ -13,6 +13,7 @@ interface Skill {
 }
 
 export default function SkillProfile() {
+  // Type-aware useState
   const [currentSkill, setCurrentSkill] = useState<number>(0);
 
   const skills: Skill[] = [
@@ -89,6 +90,7 @@ export default function SkillProfile() {
     setCurrentSkill((prev) => (prev - 1 + skills.length) % skills.length);
   };
 
+  // ✅ 3. Explicit type on skill param
   const renderSkillContent = (skill: Skill) => (
     <div>
       {skill.groups?.map((group) => (
@@ -108,8 +110,8 @@ export default function SkillProfile() {
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Main Active Skill */}
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">
+        {/* Active Skill */}
         <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
           <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
             {skills[currentSkill].title}
@@ -149,16 +151,16 @@ export default function SkillProfile() {
       </div>
 
       {/* Mobile Arrows */}
-      <div className="lg:hidden flex justify-between mt-4 px-4 relative z-50">
+      <div className="lg:hidden flex justify-between mt-6 px-6 relative z-50">
         <button
           onClick={handlePrev}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition z-50"
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
         >
           <FaChevronLeft />
         </button>
         <button
           onClick={handleNext}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition z-50"
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
         >
           <FaChevronRight />
         </button>

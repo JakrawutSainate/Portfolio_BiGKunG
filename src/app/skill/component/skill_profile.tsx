@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // ✅ 1. Type Definitions
@@ -13,6 +13,9 @@ interface Skill {
 }
 
 export default function SkillProfile() {
+  // ✅ 2. Type-aware useState
+  const [currentSkill, setCurrentSkill] = useState<number>(0);
+
   const skills: Skill[] = [
     {
       title: "FULL-STACK",
@@ -79,28 +82,15 @@ export default function SkillProfile() {
     },
   ];
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const scrollByCard = () => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const cardWidth = container.firstElementChild?.clientWidth || 0;
-      return cardWidth + 16; // include gap
-    }
-    return 0;
-  };
-
   const handleNext = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: scrollByCard(), behavior: "smooth" });
-    }
+    setCurrentSkill((prev) => (prev + 1) % skills.length);
   };
 
   const handlePrev = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -scrollByCard(), behavior: "smooth" });
-    }
+    setCurrentSkill((prev) => (prev - 1 + skills.length) % skills.length);
   };
 
+  // ✅ 3. Explicit type on skill param
   const renderSkillContent = (skill: Skill) => (
     <div>
       {skill.groups?.map((group) => (
@@ -120,6 +110,7 @@ export default function SkillProfile() {
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
+      {/* lg:grid layout */}
       <div className="hidden lg:grid gap-6 lg:grid-cols-3">
         {skills.map((skill) => (
           <div
@@ -134,12 +125,14 @@ export default function SkillProfile() {
         ))}
       </div>
 
+      {/* Mobile: Horizontal scrollable flex */}
       <div className="lg:hidden relative overflow-hidden">
+        {/* fade left */}
         <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
+        {/* fade right */}
         <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#0f0f0f] via-[#0f0f0f]/70 to-transparent pointer-events-none z-10" />
 
         <div
-          ref={scrollRef}
           className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory px-2"
           style={{ scrollBehavior: "smooth" }}
         >
@@ -156,6 +149,7 @@ export default function SkillProfile() {
           ))}
         </div>
 
+        {/* Mobile Arrows */}
         <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2 z-20">
           <button
             onClick={handlePrev}

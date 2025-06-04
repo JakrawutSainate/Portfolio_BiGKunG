@@ -7,44 +7,65 @@ export default function Skill() {
   const skills = [
     {
       title: "FULL-STACK",
-      items: [
-        "React (Vite)",
-        "Next.js",
-        "Tailwind CSS",
-        "Node.js",
-        "Express.js",
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "TypeScript",
-        "MySQL",
+      groups: [
+        {
+          label: "Frontend",
+          items: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React (Vite)",
+            "Next.js",
+            "Tailwind CSS",
+          ],
+        },
+        {
+          label: "Backend",
+          items: ["Node.js", "Express.js"],
+        },
+        {
+          label: "Database",
+          items: ["MySQL"],
+        },
       ],
     },
     {
       title: "BACKEND",
-      items: [
-        "Fastify",
-        "PHP",
-        "Python",
-        "Golang",
-        "JWT",
-        "OAuth",
-        "Linux Server",
-        "SSH",
-        "Nginx",
+      groups: [
+        {
+          label: "Framework & Language",
+          items: ["PHP", "Python", "Golang", "Fastify"],
+        },
+        {
+          label: "Auth / Security",
+          items: ["JWT", "OAuth"],
+        },
+        {
+          label: "Infrastructure & Server",
+          items: ["Linux Server", "SSH", "Nginx"],
+        },
       ],
     },
     {
       title: "DEVOPS",
-      items: [
-        "AWS Lightsail",
-        "DigitalOcean",
-        "DNS",
-        "SSL",
-        "Git",
-        "GitHub",
-        "Postman",
-        "FileZilla",
+      groups: [
+        {
+          label: "Cloud Hosting",
+          items: ["AWS Lightsail", "DigitalOcean"],
+        },
+        {
+          label: "Network & Security",
+          items: ["DNS", "SSL"],
+        },
+        {
+          label: "Version Control",
+          items: ["Git", "GitHub"],
+        },
+        {
+          label: "Dev/Test Tools",
+          items: ["Postman", "FileZilla"],
+        },
       ],
     },
   ];
@@ -57,71 +78,80 @@ export default function Skill() {
     setCurrentSkill((prev) => (prev - 1 + skills.length) % skills.length);
   };
 
-  return (
-    <div className="relative">
-      <div className="flex flex-row gap-4 mt-10 lg:grid lg:grid-cols-3">
-        {/* ส่วนของ currentSkill */}
-        <div className="col-span-1 p-10 text-red-500 bg-white bg-opacity-10">
-          <h2 className="mb-4 text-center truncate">
-            {skills[currentSkill].title}
-          </h2>
-          <ul className="text-center text-[#EEDAAE]">
-            {skills[currentSkill].items.map((item, index) => (
-              <li key={index}>{item}</li>
+  const renderSkillContent = (skill) => (
+    <div>
+      {skill.groups?.map((group) => (
+        <div key={group.label} className="mb-4">
+          <h3 className="text-sm font-semibold text-yellow-400 mb-2">
+            {group.label}
+          </h3>
+          <ul className="text-[#EEDAAE] text-sm space-y-1">
+            {group.items.map((item, i) => (
+              <li key={i}>{item}</li>
             ))}
           </ul>
         </div>
+      ))}
+    </div>
+  );
 
-        {/* BACKEND - จาก skills */}
+  return (
+    <div className="relative max-w-6xl mx-auto px-4 py-12">
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Main Active Skill */}
+        <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
+          <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+            {skills[currentSkill].title}
+          </h2>
+          {renderSkillContent(skills[currentSkill])}
+        </div>
+
+        {/* BACKEND Column (Static for lg+) */}
         {skills
           .filter((s) => s.title === "BACKEND")
           .map((skill) => (
             <div
               key={skill.title}
-              className="hidden col-span-1 p-10 text-red-500 bg-white bg-opacity-10 lg:col-start-3 lg:block"
+              className="hidden lg:block p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20"
             >
-              <h2 className="mb-4 text-center">{skill.title}</h2>
-              <ul className="text-center text-[#EEDAAE]">
-                {skill.items.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
+              <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+                {skill.title}
+              </h2>
+              {renderSkillContent(skill)}
             </div>
           ))}
 
-        {/* DEVOPS - จาก skills */}
+        {/* DEVOPS Column (Static for lg+) */}
         {skills
           .filter((s) => s.title === "DEVOPS")
           .map((skill) => (
             <div
               key={skill.title}
-              className="hidden col-span-1 justify-center items-center p-10 text-center text-red-500 bg-white bg-opacity-10 lg:col-start-2 lg:flex"
+              className="hidden lg:block p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20"
             >
-              <div>
-                <h2 className="mb-4 text-center">{skill.title}</h2>
-                <ul className="text-[#EEDAAE]">
-                  {skill.items.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+              <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
+                {skill.title}
+              </h2>
+              {renderSkillContent(skill)}
             </div>
           ))}
       </div>
 
-      <button
-        onClick={handlePrev}
-        className="absolute left-[-50px] top-1/2 transform -translate-y-1/2 text-2xl text-[#EEDAAE] hover:text-white lg:hidden"
-      >
-        <FaChevronLeft />
-      </button>
-
-      <button
-        onClick={handleNext}
-        className="absolute right-[-50px] top-1/2 transform -translate-y-1/2 text-2xl text-[#EEDAAE] hover:text-white lg:hidden"
-      >
-        <FaChevronRight />
-      </button>
+      {/* Mobile Carousel Controls */}
+      <div className="lg:hidden flex justify-between mt-6 px-6">
+        <button
+          onClick={handlePrev}
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+          onClick={handleNext}
+          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
     </div>
   );
 }

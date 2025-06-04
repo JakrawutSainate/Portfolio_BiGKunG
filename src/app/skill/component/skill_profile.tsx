@@ -5,19 +5,29 @@ export default function Skill() {
   const [currentSkill, setCurrentSkill] = useState(0);
 
   const skills = [
-    {
-      title: "FULL-STACK DEV",
-      items: ["NODE JS", "REACT JS", "HTML CSS JS"],
-    },
-    {
-      title: "PROBLEM SOLVING",
-      items: ["C++", "JAVA"],
-    },
-    {
-      title: "DESIGNING",
-      items: ["GRAPHIC DESIGNING", "UI/UX DESIGNING", "VIDEO EDITING"],
-    },
-  ];
+  {
+    title: "FULL-STACK",
+    items: [
+      "React (Vite)", "Next.js", "Tailwind CSS", "Node.js", "Express.js",
+      "HTML", "CSS", "JavaScript", "TypeScript", "MySQL"
+    ]
+  },
+  {
+    title: "BACKEND",
+    items: [
+      "Fastify", "PHP", "Python", "Golang",
+      "JWT", "OAuth", "Linux Server", "SSH", "Nginx"
+    ]
+  },
+  {
+    title: "DEVOPS",
+    items: [
+      "AWS Lightsail", "DigitalOcean",
+      "DNS", "SSL", "Git", "GitHub", "Postman", "FileZilla"
+    ]
+  }
+]
+;
 
   const handleNext = () => {
     setCurrentSkill((prev) => (prev + 1) % skills.length);

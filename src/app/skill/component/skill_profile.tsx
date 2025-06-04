@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-// ✅ 1. Type Definitions
+// Type Definitions
 interface SkillGroup {
   label: string;
   items: string[];
@@ -13,7 +13,6 @@ interface Skill {
 }
 
 export default function SkillProfile() {
-  // ✅ 2. Type-aware useState
   const [currentSkill, setCurrentSkill] = useState<number>(0);
 
   const skills: Skill[] = [
@@ -90,7 +89,6 @@ export default function SkillProfile() {
     setCurrentSkill((prev) => (prev - 1 + skills.length) % skills.length);
   };
 
-  // ✅ 3. Explicit type on skill param
   const renderSkillContent = (skill: Skill) => (
     <div>
       {skill.groups?.map((group) => (
@@ -151,16 +149,16 @@ export default function SkillProfile() {
       </div>
 
       {/* Mobile Arrows */}
-      <div className="lg:hidden flex justify-between mt-6 px-6">
+      <div className="lg:hidden flex justify-between mt-4 px-4 relative z-50">
         <button
           onClick={handlePrev}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+          className="text-3xl text-[#EEDAAE] hover:text-white transition z-50"
         >
           <FaChevronLeft />
         </button>
         <button
           onClick={handleNext}
-          className="text-3xl text-[#EEDAAE] hover:text-white transition"
+          className="text-3xl text-[#EEDAAE] hover:text-white transition z-50"
         >
           <FaChevronRight />
         </button>

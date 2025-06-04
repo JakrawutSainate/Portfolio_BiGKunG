@@ -111,17 +111,17 @@ export default function SkillProfile() {
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-12">
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">
-        {/* กล่องแสดง Skill พร้อมปุ่มลูกศรด้านนอก */}
+        {/* Skill */}
         <div className="relative w-full">
-          {/* ปุ่มซ้าย (นอกกล่อง) */}
+          {/* ปุ่มซ้าย  */}
           <button
             onClick={handlePrev}
-            className="lg:hidden absolute -left-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50"
+            className="lg:hidden absolute -left-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-5"
           >
             <FaChevronLeft />
           </button>
 
-          {/* กล่อง Skill */}
+          {/* Skill */}
           <div className="p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-md text-red-500 shadow-lg border border-white border-opacity-20">
             <h2 className="mb-6 text-2xl font-bold text-center uppercase tracking-wider">
               {skills[currentSkill].title}
@@ -129,16 +129,16 @@ export default function SkillProfile() {
             {renderSkillContent(skills[currentSkill])}
           </div>
 
-          {/* ปุ่มขวา (นอกกล่อง) */}
+          {/* ปุ่มขวา */}
           <button
             onClick={handleNext}
-            className="lg:hidden absolute -right-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50"
+            className="lg:hidden absolute -right-6 top-1/2 -translate-y-1/2 text-3xl text-[#EEDAAE] hover:text-white transition z-50 px-5"
           >
             <FaChevronRight />
           </button>
         </div>
 
-        {/* BACKEND Static (เฉพาะ Desktop) */}
+        {/* BACKEND */}
         {skills
           .filter((s) => s.title === "BACKEND")
           .map((skill) => (
@@ -153,7 +153,7 @@ export default function SkillProfile() {
             </div>
           ))}
 
-        {/* DEVOPS Static (เฉพาะ Desktop) */}
+        {/* DEVOPS */}
         {skills
           .filter((s) => s.title === "DEVOPS")
           .map((skill) => (

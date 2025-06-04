@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-export default function Skill() {
-  const [currentSkill, setCurrentSkill] = useState(0);
+// ✅ 1. Type Definitions
+interface SkillGroup {
+  label: string;
+  items: string[];
+}
 
-  const skills = [
+interface Skill {
+  title: string;
+  groups?: SkillGroup[];
+}
+
+export default function SkillProfile() {
+  // ✅ 2. Type-aware useState
+  const [currentSkill, setCurrentSkill] = useState<number>(0);
+
+  const skills: Skill[] = [
     {
       title: "FULL-STACK",
       groups: [
@@ -78,7 +90,8 @@ export default function Skill() {
     setCurrentSkill((prev) => (prev - 1 + skills.length) % skills.length);
   };
 
-  const renderSkillContent = (skill) => (
+  // ✅ 3. Explicit type on skill param
+  const renderSkillContent = (skill: Skill) => (
     <div>
       {skill.groups?.map((group) => (
         <div key={group.label} className="mb-4">
@@ -106,7 +119,7 @@ export default function Skill() {
           {renderSkillContent(skills[currentSkill])}
         </div>
 
-        {/* BACKEND Column (Static for lg+) */}
+        {/* BACKEND Static */}
         {skills
           .filter((s) => s.title === "BACKEND")
           .map((skill) => (
@@ -121,7 +134,7 @@ export default function Skill() {
             </div>
           ))}
 
-        {/* DEVOPS Column (Static for lg+) */}
+        {/* DEVOPS Static */}
         {skills
           .filter((s) => s.title === "DEVOPS")
           .map((skill) => (
@@ -137,7 +150,7 @@ export default function Skill() {
           ))}
       </div>
 
-      {/* Mobile Carousel Controls */}
+      {/* Mobile Arrows */}
       <div className="lg:hidden flex justify-between mt-6 px-6">
         <button
           onClick={handlePrev}
